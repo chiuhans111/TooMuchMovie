@@ -1,13 +1,17 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser')
+var http = require('http');
 
 app.use(bodyParser.json())
 app.use(express.static(__dirname + "/public"));
 
 app.post("/cor", function (req, res) {
-    console.log(req.body);
-    res.send(JSON.stringify(req.body));
+    http.get(req.url, function(res){
+        res.on("data", function(data){
+            res.send(data);
+        });
+    });
 });
 
 app.listen(25565, "localhost");
