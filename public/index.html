@@ -1,11 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <script src="main.js"></script>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>TOO MUCH MOVIE</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+            crossorigin="anonymous">
+
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"></script>
 </head>
+
 <body>
-    
+    <div class="container">
+
+        <div class="jumbotron">
+            <h1>TOO MUCH MOVIE</h1>
+            <p>太多電影要看</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+
+
+                <h1>將下方連結拖曳至書籤列</h1>
+                <div>
+
+                    <h2>
+                        <a href="javascript:var date=new Date(document.querySelector('.content h3').textContent.trim());var movies=[...document.querySelectorAll('#theaterShowtimeTable')].map(table=>{var duration=parseInt(table.querySelector('li:nth-child(2) > ul:nth-child(1) > li:nth-child(2)').textContent.split('：')[1])*60000;return{name:table.querySelector('.filmTitle a').textContent,duration:duration,info:[...table.querySelectorAll('.filmVersion')].map(ele=>ele.textContent).join(', '),times:[...table.querySelector('.filmVersion').parentElement.querySelectorAll('li:not([class])')].map(ele=>{var text=ele.textContent.split('：');var time=new Date(date);time.setHours(text[0]);time.setMinutes(text[1]);return{start:time.getTime(),end:time.getTime()+duration}})}});function pad(str,len){str=''+str;if(str.length>=len)return str;else return pad('0'+str,len)}
+var w=window.open();var times={};movies.map(movie=>{movie.times.map(time=>{times[time.start]=!0;times[time.end]=!0})});var timelist=[];for(var i in times)timelist.push(i);timelist.sort();timelist.map((time,index)=>times[time]=index+1);var table=[];table.push([{}].concat(movies.map(movie=>{return{textContent:movie.name}})));var timerow={};timelist.map(time=>{var date=new Date(parseInt(time));table.push([{textContent:pad(date.getHours(),2)+'：'+pad(date.getMinutes(),2),onload:function(td,tr){timerow[time]=tr}}].concat(movies.map(x=>{x.tds=[];return{onload:function(td){x.tds.push(td)}}})))});movies.map((movie,i)=>{movie.selectedTime=-1;movie.times.map((time,j)=>{var start=times[time.start];var end=times[time.end];var x=i+1;table[start][x]={rowSpan:end-start,style:{background:'gray'},onload:function(element){time.element=element},onclick:function(){if(movie.selectedTime!=j)movie.selectedTime=j;else movie.selectedTime=-1;update()}};for(var y=start+1;y<end;y++)table[y][x].hidden=!0})});function timeIntersect(a,b){return a.end>b.start&amp;&amp;a.start<b.end}
+function update(){var regTimes=[];movies.map(movie=>{if(movie.selectedTime!=-1)
+regTimes.push(movie.times[movie.selectedTime])});movies.map(movie=>{movie.tds.map(td=>td.style.backgroundColor='');movie.times.map((time,i)=>{var color='gray';var selected=!1;if(i==movie.selectedTime){selected=!0;color='green';movie.tds.map(td=>td.style.backgroundColor='lightgreen')}
+regTimes.map(rtime=>{if(rtime!=time&amp;&amp;timeIntersect(time,rtime)){if(selected){movie.tds.map(td=>td.style.backgroundColor='pink');color='red'}else color='black'}});time.element.style.backgroundColor=color})});for(var i in timerow)timerow[i].style.backgroundColor='white';regTimes.map(time=>{timelist.map(time2=>{if(time2>=time.start&amp;&amp;time2<time.end)timerow[time2].style.backgroundColor='lightgray'})})}
+function attcopy(from,to){for(var i in from){if(from[i]instanceof Function)to[i]=from[i];else if(from[i]instanceof Object)attcopy(from[i],to[i]||(to[i]={}));else to[i]=from[i]}}
+var wtable=w.document.createElement('table');table.map(row=>{var tr=w.document.createElement('tr');row.map(data=>{var td=w.document.createElement('td');td.style.border='solid lightgray';td.style.padding='5px';attcopy(data,td);tr.appendChild(td);if(data.onload instanceof Function)data.onload(td,tr)});wtable.appendChild(tr)});wtable.style.borderCollapse='collapse';w.document.body.appendChild(wtable)">開眼電影時間表</a>
+                    </h2>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <h1>電影頁面</h1>
+                <h2><a href="http://www.atmovies.com.tw/showtime/t02e02/a02/">林園</a></h2>
+                <h2><a href="http://www.atmovies.com.tw/showtime/t02f08/a02/">湳山</a></h2>
+            </div>
+        </div>
+        <div class="row">
+            <h1>操作說明</h1>
+            <h2>安裝：</h2>
+            <h3>將連結拖曳至書籤列即可</h3>
+            <h2>使用：</h2>
+            <h3>開啟任意開眼電影頁面，在頁面開啟時點擊剛新增的書籤</h3>
+        </div>
+    </div>
 </body>
+
 </html>
