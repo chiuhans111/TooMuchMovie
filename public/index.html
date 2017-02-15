@@ -185,7 +185,7 @@
         return pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2);
     }
 
-    for (var hour = 0; hour <= 24; hour += 0.5) {
+    for (var hour = 9; hour <= 21; hour += 0.5) {
         var time = new Date();
         time.setHours(Math.floor(hour), hour % 1 * 60, 0, 0);
         var text = timeText(time);
