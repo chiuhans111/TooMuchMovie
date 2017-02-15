@@ -268,7 +268,8 @@
     }
 
     function timeIntersect(a, b, offset) {
-        return a.end > b.start + offset && a.start + offset < b.end;
+        offset = +offset;
+        return a.end > (b.start + offset) && (a.start + offset) < b.end;
     }
 
     function compareGetter(getter) {
