@@ -195,14 +195,14 @@
             option.value = time.getTime();
             return option;
         }
-        if(hour<=21) selectEnter.appendChild(getOption());
+        if (hour <= 21) selectEnter.appendChild(getOption());
         selectBreakStart.appendChild(getOption());
         selectBreakEnd.appendChild(getOption());
     }
 
     selectBreakStart.onchange = function () {
         [...selectBreakEnd.querySelectorAll("option")].map(option => {
-            if (option.value=="" || option.value < selectBreakStart.value) option.hidden = "true";
+            if (option.value == "" || option.value < selectBreakStart.value) option.hidden = "true";
             else option.hidden = false;
         })
     }
@@ -280,7 +280,7 @@
         var offset = selectDelay.value;
         if (offset == '') offset = 0;
         var enterTime = selectEnter.value;
-        if (enterTime == '') enterTime = 0;        
+        if (enterTime == '') enterTime = 0;
         var breakStart = selectBreakStart.value;
         var breakEnd = selectBreakEnd.value;
         var selectedMovies = movies.filter(movie => movie.element.querySelector("input").checked);
@@ -320,19 +320,34 @@
         });
         console.log("plan1", plan1);
         search(selectedMovies, plan1);
-
+        successPlans.sort(compareGetter(plan => plan[0].start));
+        successPlans.sort(compareGetter(plan => plan[plan.length - 1].end));
         methodsContainer.innerHTML = "";
-        successPlans.map(plan => {
+
+        if (successPlans.length == 0) {
+            methodModel.build(function (card) {
+                var content = card.querySelector("[name=content]");
+                var title = document.createElement("p");
+                title.classList = "text-warning";
+                title.textContent = "無方案";
+                content.appendChild(title);
+                methodsContainer.appendChild(card);
+            });
+        } else successPlans.slice(0, 6).map((plan, i) => {
 
             methodModel.build(function (card) {
-                var content = card.querySelector("[name=content]")
+                var content = card.querySelector("[name=content]");
+                var title = document.createElement("p");
+                title.classList = "text-primary";
+                title.textContent = "方案" + "ABCDEF"[i];
+                content.appendChild(title);
                 plan.map(time => {
                     var text = timeText(new Date(time.start)) + " ~ " + timeText(new Date(time.end));
                     if (time.type == "movie") text += " : " + time.info.name;
                     else if (time.type == "break") text += " : 休息";
                     else return;
                     var p = document.createElement("p");
-                    if(time.type=="break") p.className="text-info";
+                    if (time.type == "break") p.className = "text-info";
                     p.textContent = text;
                     content.appendChild(p);
                 });
