@@ -320,8 +320,14 @@
         });
         console.log("plan1", plan1);
         search(selectedMovies, plan1);
-        successPlans.sort(compareGetter(plan => plan[0].start));
-        successPlans.sort(compareGetter(plan => plan[plan.length - 1].end));
+        successPlans.sort((a,b)=>{
+            var ast = a[0].start;
+            var aed = a[a.length-1].end;
+            var bst = b[0].start;
+            var bed = b[a.length-1].end;
+            if(aed!=bed) return aed-bed;
+            else return ast-bst;
+        });
         methodsContainer.innerHTML = "";
 
         if (successPlans.length == 0) {
