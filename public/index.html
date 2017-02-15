@@ -80,6 +80,7 @@
                         <div class="col-sm-8">
                             <select class="form-control" id="select-enter">
                                 <option value="" disabled selected>請選擇</option>
+                                <option value="">無</option>                                
                             </select>
                         </div>
                     </div>
@@ -318,9 +319,11 @@
             end: +breakEnd,
             type: "break"
         });
-        console.log("plan1", plan1);
+        
         search(selectedMovies, plan1);
         successPlans.sort((a,b)=>{
+            a = a.filter(a=>a.type=="movie");
+            b = b.filter(b=>b.type=="movie");
             var ast = a[0].start;
             var aed = a[a.length-1].end;
             var bst = b[0].start;
