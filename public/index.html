@@ -4,60 +4,344 @@
 <head>
     <meta charset="UTF-8">
     <title>TOO MUCH MOVIE</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-            crossorigin="anonymous">
-
-            <!-- Latest compiled and minified JavaScript -->
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-                crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <style>
+        .spinner {
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            margin: 100px auto;
+            -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+            animation: sk-rotateplane 1.2s infinite ease-in-out;
+        }
+        
+        @-webkit-keyframes sk-rotateplane {
+            0% {
+                -webkit-transform: perspective(120px)
+            }
+            50% {
+                -webkit-transform: perspective(120px) rotateY(180deg)
+            }
+            100% {
+                -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg)
+            }
+        }
+        
+        @keyframes sk-rotateplane {
+            0% {
+                transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+                -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+            }
+            50% {
+                transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+                -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+            }
+            100% {
+                transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+                -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
 
-        <div class="jumbotron">
-            <h1>TOO MUCH MOVIE</h1>
-            <p>太多電影要看</p>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-
-
-                <h1>將下方連結拖曳至書籤列</h1>
-                <div>
-
-                    <h2>
-                        <a href="javascript:var date=new Date(document.querySelector('.content h3').textContent.trim());var movies=[...document.querySelectorAll('#theaterShowtimeTable')].map(table=>{var duration=parseInt(table.querySelector('li:nth-child(2) > ul:nth-child(1) > li:nth-child(2)').textContent.split('：')[1])*60000;return{name:table.querySelector('.filmTitle a').textContent,duration:duration,info:[...table.querySelectorAll('.filmVersion')].map(ele=>ele.textContent).join(', '),times:[...table.querySelector('.filmVersion').parentElement.querySelectorAll('li:not([class])')].map(ele=>{var text=ele.textContent.split('：');var time=new Date(date);time.setHours(text[0]);time.setMinutes(text[1]);return{start:time.getTime(),end:time.getTime()+duration}})}});function pad(str,len){str=''+str;if(str.length>=len)return str;else return pad('0'+str,len)}
-var w=window.open();var times={};movies.map(movie=>{movie.times.map(time=>{times[time.start]=!0;times[time.end]=!0})});var timelist=[];for(var i in times)timelist.push(i);timelist.sort();timelist.map((time,index)=>times[time]=index+1);var table=[];table.push([{}].concat(movies.map(movie=>{return{textContent:movie.name}})));var timerow={};timelist.map(time=>{var date=new Date(parseInt(time));table.push([{textContent:pad(date.getHours(),2)+'：'+pad(date.getMinutes(),2),onload:function(td,tr){timerow[time]=tr}}].concat(movies.map(x=>{x.tds=[];return{onload:function(td){x.tds.push(td)}}})))});movies.map((movie,i)=>{movie.selectedTime=-1;movie.times.map((time,j)=>{var start=times[time.start];var end=times[time.end];var x=i+1;table[start][x]={rowSpan:end-start,style:{background:'gray'},onload:function(element){time.element=element},onclick:function(){if(movie.selectedTime!=j)movie.selectedTime=j;else movie.selectedTime=-1;update()}};for(var y=start+1;y<end;y++)table[y][x].hidden=!0})});function timeIntersect(a,b){return a.end>b.start&amp;&amp;a.start<b.end}
-function update(){var regTimes=[];movies.map(movie=>{if(movie.selectedTime!=-1)
-regTimes.push(movie.times[movie.selectedTime])});movies.map(movie=>{movie.tds.map(td=>td.style.backgroundColor='');movie.times.map((time,i)=>{var color='gray';var selected=!1;if(i==movie.selectedTime){selected=!0;color='green';movie.tds.map(td=>td.style.backgroundColor='lightgreen')}
-regTimes.map(rtime=>{if(rtime!=time&amp;&amp;timeIntersect(time,rtime)){if(selected){movie.tds.map(td=>td.style.backgroundColor='pink');color='red'}else color='black'}});time.element.style.backgroundColor=color})});for(var i in timerow)timerow[i].style.backgroundColor='white';regTimes.map(time=>{timelist.map(time2=>{if(time2>=time.start&amp;&amp;time2<time.end)timerow[time2].style.backgroundColor='lightgray'})})}
-function attcopy(from,to){for(var i in from){if(from[i]instanceof Function)to[i]=from[i];else if(from[i]instanceof Object)attcopy(from[i],to[i]||(to[i]={}));else to[i]=from[i]}}
-var wtable=w.document.createElement('table');table.map(row=>{var tr=w.document.createElement('tr');row.map(data=>{var td=w.document.createElement('td');td.style.border='solid lightgray';td.style.padding='5px';attcopy(data,td);tr.appendChild(td);if(data.onload instanceof Function)data.onload(td,tr)});wtable.appendChild(tr)});wtable.style.borderCollapse='collapse';w.document.body.appendChild(wtable)">開眼電影時間表</a>
-                    </h2>
-                </div>
-            </div>
-            <div class="col-md-6">
-
-                <h1>電影頁面</h1>
-                <h2><a href="http://www.atmovies.com.tw/showtime/t02e02/a02/">林園</a></h2>
-                <h2><a href="http://www.atmovies.com.tw/showtime/t02f08/a02/">湳山</a></h2>
-            </div>
-        </div>
-        <div class="row">
-            <h1>操作說明</h1>
-            <h2>安裝：</h2>
-            <h3>將連結拖曳至書籤列即可</h3>
-            <h2>使用：</h2>
-            <h3>開啟任意開眼電影頁面，在頁面開啟時點擊剛新增的書籤</h3>
+            <h1>太多電影要看</h1>
+            <h3>TOO MANY MOVIE</h3>
         </div>
     </div>
+    <div class="container">
+
+
+
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="form-group row">
+
+                        <label for="select-theater" class="col-sm-4 col-form-label">選擇影院</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="select-theater">
+                                <option value="" disabled selected>請選擇</option>
+                                <option value="http://www.atmovies.com.tw/showtime/t02e02/a02/">林園</option>
+                                <option value="http://www.atmovies.com.tw/showtime/t02f08/a02/">湳山</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="select-enter" class="col-sm-4 col-form-label">進場時間</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="select-enter">
+                                <option value="" disabled selected>請選擇</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="select-break" class="col-sm-4 col-form-label">休息時間</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="select-break-start">
+                                <option value="" disabled selected>開始時間</option>
+                                <option value="">無</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="select-break-end">
+                                <option value="" disabled selected>結束時間</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="select-delay" class="col-sm-4 col-form-label">可接受遲到時間</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="select-delay">
+                                <option value="" disabled selected>請選擇</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <p id="progress"></p>
+                <div class="row" id="moviesContainer">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2" id="movieCheckBoxModel">
+                        <div class="form-group">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">
+                                    <span name="movieName">電影名稱</span>
+                                </span>
+                            </label>
+                            <img class="img-thumbnail" width="100%" src="http://www.photowant.com/photo101/fden41211837/pm_fden41211837_0007.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="btn-run">排出最佳觀影行程</button>
+                <h4></h4>
+
+                <div class="card-columns" id="methodsContainer">
+                    <div class="card" id="methodModel">
+                        <div class="card-block">
+                            <div name="content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: none" id="fake"></div>
 </body>
+<script>
+    function pad(str, x) {
+        str = "" + str;
+        if (str.length >= x) return str;
+        return pad("0" + str, x);
+    }
+
+    function Model(id) {
+        var targetElement = document.getElementById(id);
+        var content = targetElement.outerHTML;
+        targetElement.remove();
+        this.build = function (callback) {
+            var element = document.createElement("div");
+            element.innerHTML = content;
+            var target = element.childNodes[0];
+            callback(target);
+            return target;
+        }
+    }
+
+    var fake = document.getElementById("fake");
+    var moviesContainer = document.getElementById("moviesContainer");
+    var methodsContainer = document.getElementById("methodsContainer");
+    var selectTheater = document.getElementById("select-theater");
+    var progress = document.getElementById("progress");
+    var btnRun = document.getElementById("btn-run");
+    var selectEnter = document.getElementById("select-enter");
+    var selectBreakStart = document.getElementById("select-break-start");
+    var selectBreakEnd = document.getElementById("select-break-end");
+    var selectDelay = document.getElementById("select-delay");
+    var movieCheckBoxModel = new Model("movieCheckBoxModel");
+    var methodModel = new Model("methodModel");
+    var xhr = new XMLHttpRequest();
+    var date, movies;
+
+    function timeText(time) {
+        return pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2);
+    }
+
+    for (var hour = 0; hour <= 24; hour += 0.5) {
+        var time = new Date();
+        time.setHours(Math.floor(hour), hour % 1 * 60, 0, 0);
+        var text = timeText(time);
+        function getOption() {
+            var option = document.createElement("option");
+            option.textContent = text;
+            option.value = time.getTime();
+            return option;
+        }
+        selectEnter.appendChild(getOption());
+        selectBreakStart.appendChild(getOption());
+        selectBreakEnd.appendChild(getOption());
+    }
+
+    selectBreakStart.onchange = function () {
+        [...selectBreakEnd.querySelectorAll("option")].map(option => {
+            if (option.value=="" || option.value < selectBreakStart.value) option.hidden = "true";
+            else option.hidden = false;
+        })
+    }
+
+    for (var min = 0; min <= 30; min += 5) {
+        var option = document.createElement("option");
+        option.textContent = min + "分鐘";
+        option.value = min * 60000;
+        selectDelay.appendChild(option);
+    }
+
+
+    selectTheater.onchange = function () {
+        moviesContainer.innerHTML = "<div class='spinner'></div>";
+        xhr.open("get", "http://cors-anywhere.herokuapp.com/" + selectTheater.value);
+        progress.textContent = "正在發送請求...";
+        xhr.onprogress = function (event) {
+            progress.textContent = "正在取得... " + Math.round(event.loaded * 100 / event.total) + "%";
+        }
+
+        xhr.onload = function () {
+            progress.textContent = "";
+            moviesContainer.innerHTML = "";
+            fake.innerHTML = this.response;
+
+
+            date = new Date(fake.querySelector(".content h3").textContent.trim());
+            movies = [...fake.querySelectorAll("#theaterShowtimeTable")].map(table => {
+                var duration = parseInt(table.querySelector("li:nth-child(2) > ul:nth-child(1) > li:nth-child(2)").textContent.split("：")[1]) * 60000;
+                var name = table.querySelector(".filmTitle a").textContent;
+
+                var imagesrc = table.querySelector("a>img").getAttribute("src");
+                var element = movieCheckBoxModel.build(function (ele) {
+                    ele.querySelector("[name=movieName]").textContent = name;
+                    ele.querySelector("img").setAttribute("src", imagesrc);
+                });
+                moviesContainer.appendChild(element);
+                return {
+                    name: name,
+                    duration: duration,
+                    src: imagesrc,
+                    element: element,
+                    info: [...table.querySelectorAll(".filmVersion")].map(ele => ele.textContent).join(", "),
+                    times: [...table.querySelector(".filmVersion").parentElement.querySelectorAll("li:not([class])")].map(ele => {
+                        var text = ele.textContent.split("：");
+                        var time = new Date(date);
+                        time.setHours(text[0]);
+                        time.setMinutes(text[1]);
+                        return {
+                            type: "movie",
+                            info: {
+                                name: name
+                            },
+                            start: time.getTime(),
+                            end: time.getTime() + duration
+                        };
+                    })
+                };
+            });
+        }
+        xhr.send();
+    }
+
+    function timeIntersect(a, b, offset) {
+        return a.end > b.start + offset && a.start + offset < b.end;
+    }
+
+    function compareGetter(getter) {
+        return function (a, b) {
+            return getter(a) - getter(b);
+        }
+    }
+
+    btnRun.onclick = function () {
+        var offset = selectDelay.value;
+        if (offset == '') offset = 0;
+        var enterTime = selectEnter.value;
+        if (enterTime == '') enterTime = 0;        
+        var breakStart = selectBreakStart.value;
+        var breakEnd = selectBreakEnd.value;
+        var selectedMovies = movies.filter(movie => movie.element.querySelector("input").checked);
+
+        var successPlans = [];
+        function search(remainMovies, plans) {
+            if (remainMovies.length == 0) {
+                plans.sort(compareGetter(time => time.start));
+                successPlans.push(plans);
+                return;
+            }
+            var current = remainMovies[0];
+
+            current.times.map(time => {
+                var success = true;
+                for (var i in plans) {
+                    var plan = plans[i];
+                    if (timeIntersect(plan, time, offset)) {
+                        success = false;
+                        break;
+                    }
+                }
+                if (success) search(remainMovies.slice(1), plans.concat(time))
+            })
+        }
+
+        var plan1 = [{
+            start: 0,
+            end: +enterTime,
+            type: "wait"
+        }];
+
+        if (breakStart != '' && breakEnd != '') plan1.push({
+            start: +breakStart,
+            end: +breakEnd,
+            type: "break"
+        });
+        console.log("plan1", plan1);
+        search(selectedMovies, plan1);
+
+        methodsContainer.innerHTML = "";
+        successPlans.map(plan => {
+
+            methodModel.build(function (card) {
+                var content = card.querySelector("[name=content]")
+                plan.map(time => {
+                    var text = timeText(new Date(time.start)) + " ~ " + timeText(new Date(time.end));
+                    if (time.type == "movie") text += " : " + time.info.name;
+                    else if (time.type == "break") text += " : 休息";
+                    else return;
+                    var p = document.createElement("p");
+                    if(time.type=="break") p.className="text-info";
+                    p.textContent = text;
+                    content.appendChild(p);
+                });
+                methodsContainer.appendChild(card);
+            });
+
+        })
+    }
+
+</script>
 
 </html>
