@@ -124,6 +124,7 @@
                                 </span>
                             </label>
                             <img class="img-thumbnail" width="100%" src="http://www.photowant.com/photo101/fden41211837/pm_fden41211837_0007.jpg">
+                            <a href="" name="link" target="_blank">詳細資訊</a>
                         </div>
                     </div>
                 </div>
@@ -197,8 +198,8 @@
             return option;
         }
         if (hour <= 21) selectEnter.appendChild(getOption());
-        selectBreakStart.appendChild(getOption());
-        selectBreakEnd.appendChild(getOption());
+        if (hour <= 19)selectBreakStart.appendChild(getOption());
+        if (hour <= 19)selectBreakEnd.appendChild(getOption());
     }
 
     selectBreakStart.onchange = function () {
@@ -223,7 +224,9 @@
         xhr.onprogress = function (event) {
             progress.textContent = "正在取得... " + Math.round(event.loaded * 100 / event.total) + "%";
         }
-
+        xhr.onerror = function(){
+            selectTheater.onchange();
+        }
         xhr.onload = function () {
             progress.textContent = "";
             moviesContainer.innerHTML = "";
@@ -233,12 +236,14 @@
             date = new Date(fake.querySelector(".content h3").textContent.trim());
             movies = [...fake.querySelectorAll("#theaterShowtimeTable")].map(table => {
                 var duration = parseInt(table.querySelector("li:nth-child(2) > ul:nth-child(1) > li:nth-child(2)").textContent.split("：")[1]) * 60000;
-                var name = table.querySelector(".filmTitle a").textContent;
-
+                var titleElement = table.querySelector(".filmTitle a");
+                var name = titleElement.textContent;
+                var link = "http://www.atmovies.com.tw" + titleElement.getAttribute("href");
                 var imagesrc = table.querySelector("a>img").getAttribute("src");
                 var element = movieCheckBoxModel.build(function (ele) {
                     ele.querySelector("[name=movieName]").textContent = name;
                     ele.querySelector("img").setAttribute("src", imagesrc);
+                    ele.querySelector("[name=link]").setAttribute("href", link);
                 });
                 moviesContainer.appendChild(element);
                 return {
@@ -246,6 +251,7 @@
                     duration: duration,
                     src: imagesrc,
                     element: element,
+                    link: link,
                     info: [...table.querySelectorAll(".filmVersion")].map(ele => ele.textContent).join(", "),
                     times: [...table.querySelector(".filmVersion").parentElement.querySelectorAll("li:not([class])")].map(ele => {
                         var text = ele.textContent.split("：");
@@ -320,17 +326,17 @@
             end: +breakEnd,
             type: "break"
         });
-        
+
         search(selectedMovies, plan1);
-        successPlans.sort((a,b)=>{
-            a = a.filter(a=>a.type=="movie");
-            b = b.filter(b=>b.type=="movie");
+        successPlans.sort((a, b) => {
+            a = a.filter(a => a.type == "movie");
+            b = b.filter(b => b.type == "movie");
             var ast = a[0].start;
-            var aed = a[a.length-1].end;
+            var aed = a[a.length - 1].end;
             var bst = b[0].start;
-            var bed = b[a.length-1].end;
-            if(aed!=bed) return aed-bed;
-            else return ast-bst;
+            var bed = b[a.length - 1].end;
+            if (aed != bed) return aed - bed;
+            else return ast - bst;
         });
         methodsContainer.innerHTML = "";
 
