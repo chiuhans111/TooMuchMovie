@@ -145,6 +145,11 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <!-- Start of SimpleHitCounter Code -->
+        <img src="http://simplehitcounter.com/hit.php?uid=2234799&f=0&b=16777215" border="0" height="18" width="83">
+        <!-- End of SimpleHitCounter Code -->
+        <a href="https://github.com/chiuhans111/TooMuchMovie/blob/master/public/index.html">view on github page</a>
     </div>
     <div style="display: none" id="fake"></div>
 </body>
@@ -198,8 +203,8 @@
             return option;
         }
         if (hour <= 21) selectEnter.appendChild(getOption());
-        if (hour <= 19)selectBreakStart.appendChild(getOption());
-        if (hour <= 19)selectBreakEnd.appendChild(getOption());
+        if (hour <= 19) selectBreakStart.appendChild(getOption());
+        if (hour <= 19) selectBreakEnd.appendChild(getOption());
     }
 
     selectBreakStart.onchange = function () {
@@ -224,7 +229,7 @@
         xhr.onprogress = function (event) {
             progress.textContent = "正在取得... " + Math.round(event.loaded * 100 / event.total) + "%";
         }
-        xhr.onerror = function(){
+        xhr.onerror = function () {
             selectTheater.onchange();
         }
         xhr.onload = function () {
