@@ -99,7 +99,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="select-delay" class="col-sm-4 col-form-label">可接受遲到時間</label>
+                        <label for="select-delay" class="col-sm-4 col-form-label">可接受遲到</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="select-delay">
                                 <option value="" disabled selected>請選擇</option>
@@ -362,7 +362,7 @@
                 title.classList = "text-primary";
                 title.textContent = "方案" + "ABCDEF"[i];
                 content.appendChild(title);
-                plan.map(time => {
+                plan.map((time, i) => {
                     var text = timeText(new Date(time.start)) + " ~ " + timeText(new Date(time.end));
                     if (time.type == "movie") text += " : " + time.info.name;
                     else if (time.type == "break") text += " : 休息";
@@ -370,6 +370,10 @@
                     var p = document.createElement("p");
                     if (time.type == "break") p.className = "text-info";
                     p.textContent = text;
+                    if(i>0){
+                        var overlap =  plan[i-1].end - time.start;
+                        if(overlap>0) p.innerHTML = "<span class='text-warning'> (遲到"+overlap/60000+"分鐘)</span><br>"+p.innerHTML
+                    }
                     content.appendChild(p);
                 });
                 methodsContainer.appendChild(card);
