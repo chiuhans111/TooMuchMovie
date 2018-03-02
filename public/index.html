@@ -224,7 +224,7 @@
 
     selectTheater.onchange = function () {
         moviesContainer.innerHTML = "<div class='spinner'></div>";
-        xhr.open("get", "http://cors-anywhere.herokuapp.com/" + selectTheater.value);
+        xhr.open("get", "https://cors-anywhere.herokuapp.com/" + selectTheater.value);
         progress.textContent = "正在發送請求...";
         xhr.onprogress = function (event) {
             progress.textContent = "正在取得... " + Math.round(event.loaded * 100 / event.total) + "%";
@@ -243,7 +243,7 @@
                 var duration = parseInt(table.querySelector("li:nth-child(2) > ul:nth-child(1) > li:nth-child(2)").textContent.split("：")[1]) * 60000;
                 var titleElement = table.querySelector(".filmTitle a");
                 var name = titleElement.textContent;
-                var link = "http://www.atmovies.com.tw" + titleElement.getAttribute("href");
+                var link = "https://www.atmovies.com.tw" + titleElement.getAttribute("href");
                 var imagesrc = table.querySelector("a>img").getAttribute("src");
                 var element = movieCheckBoxModel.build(function (ele) {
                     ele.querySelector("[name=movieName]").textContent = name;
